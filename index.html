@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Origami Bloom</title>
+  <title>Origami Studio</title>
   <style>
     :root {
       --bg1: #fff8fc;
       --bg2: #f3fbff;
-      --pink: #ffcce6;
-      --rose: #f59dc8;
-      --peach: #ffd9b8;
-      --yellow: #fff2b3;
-      --mint: #daf7df;
+      --pink: #f7cfe3;
+      --rose: #e8a9c8;
+      --peach: #ffdcbc;
+      --yellow: #fff2bf;
+      --mint: #dcf5e2;
       --blue: #dcefff;
       --lavender: #e9e0ff;
-      --purple: #7b638d;
-      --text: #5f576d;
-      --white: rgba(255,255,255,0.9);
+      --purple: #776287;
+      --text: #5d5669;
+      --white: rgba(255,255,255,0.92);
       --shadow: 0 12px 35px rgba(130, 108, 148, 0.16);
       --radius-xl: 30px;
       --radius-lg: 22px;
@@ -33,9 +33,9 @@
       font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 10% 10%, #ffe3f1 0, transparent 18%),
-        radial-gradient(circle at 88% 12%, #dff4ff 0, transparent 20%),
-        radial-gradient(circle at 50% 88%, #fff0bc 0, transparent 18%),
+        radial-gradient(circle at 10% 10%, #ffe5f1 0, transparent 18%),
+        radial-gradient(circle at 88% 12%, #dff3ff 0, transparent 20%),
+        radial-gradient(circle at 50% 88%, #fff0c2 0, transparent 18%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       min-height: 100vh;
       overflow-x: hidden;
@@ -105,7 +105,7 @@
     }
 
     .homepage, .app-screen, .complete-wrap {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 20px;
     }
@@ -137,12 +137,7 @@
       padding: 14px;
       text-align: center;
       background: linear-gradient(135deg, #fff5cb, #ffe3f0, #dff2ff);
-    }
-
-    .mini-feature span {
-      display: block;
-      font-size: 1.8rem;
-      margin-bottom: 8px;
+      font-size: 0.95rem;
     }
 
     .paper-preview {
@@ -152,16 +147,22 @@
       justify-content: center;
       background: linear-gradient(135deg, #fff3c8, #ffe0ef, #dff1ff);
       border-radius: 24px;
+      position: relative;
     }
 
-    .paper-preview .crane {
-      font-size: 6rem;
+    .preview-shape {
+      width: 180px;
+      height: 180px;
+      background: rgba(255,255,255,0.95);
+      transform: rotate(45deg);
+      border: 3px solid #d9abc6;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
       animation: floaty 2.2s ease-in-out infinite;
     }
 
     @keyframes floaty {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%,100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(-10px); }
     }
 
     .section-title {
@@ -180,7 +181,7 @@
     }
 
     .project-grid {
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
     .card {
@@ -206,15 +207,54 @@
     .level-intermediate { background: linear-gradient(135deg, #eaf6ff, #e7faeb); }
     .level-advanced { background: linear-gradient(135deg, #f1ebff, #ffeef7); }
 
+    .card h3 {
+      margin: 0 0 8px;
+      color: #6f587f;
+    }
+
+    .card p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 0.96rem;
+    }
+
     .project-thumb {
-      height: 145px;
+      height: 120px;
       border-radius: 22px;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.5rem;
       background: linear-gradient(135deg, #fff5cb, #ffe4f1, #dff1ff);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thumb-shape {
+      width: 90px;
+      height: 90px;
+      background: rgba(255,255,255,0.95);
+      border: 3px solid #d9abc6;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+
+    .thumb-diamond { transform: rotate(45deg); }
+    .thumb-triangle {
+      width: 0;
+      height: 0;
+      border-left: 45px solid transparent;
+      border-right: 45px solid transparent;
+      border-bottom: 78px solid rgba(255,255,255,0.98);
+      border-top: 0;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .thumb-kite {
+      width: 70px;
+      height: 100px;
+      clip-path: polygon(50% 0%, 100% 35%, 72% 100%, 28% 100%, 0% 35%);
     }
 
     .start-wrap, .complete-actions {
@@ -326,8 +366,49 @@
     }
 
     .placeholder-art {
-      font-size: 5rem;
+      width: 140px;
+      height: 140px;
+      background: rgba(255,255,255,0.96);
+      border: 3px solid #dca7c8;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
       z-index: 2;
+    }
+
+    .art-diamond {
+      transform: rotate(45deg);
+    }
+
+    .art-triangle {
+      width: 0;
+      height: 0;
+      border-left: 75px solid transparent;
+      border-right: 75px solid transparent;
+      border-bottom: 130px solid rgba(255,255,255,0.98);
+      border-top: 0;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+      border-left-color: transparent;
+      border-right-color: transparent;
+    }
+
+    .art-kite {
+      width: 110px;
+      height: 160px;
+      clip-path: polygon(50% 0%, 100% 35%, 72% 100%, 28% 100%, 0% 35%);
+      transform: none;
+    }
+
+    .art-rectangle {
+      width: 170px;
+      height: 110px;
+      border-radius: 12px;
+    }
+
+    .art-tall {
+      width: 95px;
+      height: 170px;
+      border-radius: 18px;
     }
 
     .guide-line, .guide-arrow {
@@ -344,11 +425,12 @@
     }
 
     .guide-arrow {
-      font-size: 2.3rem;
+      font-size: 2rem;
       color: #e36ba9;
       right: 58px;
       bottom: 58px;
       animation: bounceArrow 1.3s infinite;
+      font-weight: bold;
     }
 
     @keyframes bounceArrow {
@@ -379,7 +461,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 0.95rem;
+      padding: 8px;
+      text-align: center;
     }
 
     .step-text {
@@ -464,9 +548,10 @@
       position: absolute;
       right: 16%;
       bottom: 18%;
-      font-size: 2.2rem;
+      font-size: 2rem;
       color: rgba(227, 107, 169, 0.96);
       animation: bounceArrow 1.3s infinite;
+      font-weight: bold;
     }
 
     .status-row, .bottom-nav {
@@ -503,9 +588,14 @@
       margin-bottom: 10px;
     }
 
-    .complete-icon {
-      font-size: 5rem;
-      margin-bottom: 14px;
+    .complete-shape {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 18px;
+      background: rgba(255,255,255,0.96);
+      border: 3px solid #dca7c8;
+      transform: rotate(45deg);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
     }
 
     @media (max-width: 1020px) {
@@ -540,9 +630,9 @@
   <section id="homeScreen">
     <header class="hero">
       <div class="hero-badge">Visual origami learning with camera support</div>
-      <h1>Origami Bloom</h1>
+      <h1>Origami Studio</h1>
       <p>
-        Choose your level, pick what you want to fold, and learn with picture guides,
+        Choose your level, choose what you want to fold, and learn with picture guides,
         optional AI help, and guided overlays on your live camera view.
       </p>
     </header>
@@ -552,34 +642,33 @@
         <div class="glass-card">
           <h2>Learn with visuals first</h2>
           <p>
-            This prototype is built to feel colorful, calm, and easy to navigate. Instead of relying
-            only on written directions, each lesson includes picture-style step guides, simple movement cues,
-            and optional feedback.
+            This prototype is built to feel colorful, calm, and easy to navigate. Each lesson includes
+            picture-style step guides, movement cues, and optional feedback instead of relying only on text.
           </p>
           <div class="mini-features">
-            <div class="mini-feature"><span>🖼️</span>Picture guides</div>
-            <div class="mini-feature"><span>📷</span>Live camera</div>
-            <div class="mini-feature"><span>✨</span>Fold overlays</div>
+            <div class="mini-feature">Picture guides</div>
+            <div class="mini-feature">Live camera</div>
+            <div class="mini-feature">Fold overlays</div>
           </div>
         </div>
 
         <div class="glass-card paper-preview">
-          <div class="crane">🕊️</div>
+          <div class="preview-shape"></div>
         </div>
       </div>
 
       <h2 class="section-title">1. Pick your level</h2>
       <div class="level-grid">
         <div class="card level-card level-beginner selected" onclick="selectLevel(this, 'Beginner')">
-          <h3>Beginner 🌱</h3>
+          <h3>Beginner</h3>
           <p>Simple folds, slower pacing, and extra support.</p>
         </div>
         <div class="card level-card level-intermediate" onclick="selectLevel(this, 'Intermediate')">
-          <h3>Intermediate 🌸</h3>
+          <h3>Intermediate</h3>
           <p>More detail and a little less support.</p>
         </div>
         <div class="card level-card level-advanced" onclick="selectLevel(this, 'Advanced')">
-          <h3>Advanced ✨</h3>
+          <h3>Advanced</h3>
           <p>More complex shapes for confident folders.</p>
         </div>
       </div>
@@ -587,24 +676,75 @@
       <h2 class="section-title">2. Pick what you want to fold</h2>
       <div class="project-grid">
         <div class="card project-card selected" onclick="selectProject(this, 'Crane')">
-          <div class="project-thumb">🕊️</div>
+          <div class="project-thumb"><div class="thumb-shape thumb-diamond"></div></div>
           <h3>Crane</h3>
           <p>A classic origami model with elegant folds.</p>
         </div>
+
         <div class="card project-card" onclick="selectProject(this, 'Boat')">
-          <div class="project-thumb">⛵</div>
+          <div class="project-thumb"><div class="thumb-shape thumb-triangle"></div></div>
           <h3>Boat</h3>
-          <p>A fun project that works well for beginners.</p>
+          <p>A simple fold with a clear shape and easy steps.</p>
         </div>
+
         <div class="card project-card" onclick="selectProject(this, 'Frog')">
-          <div class="project-thumb">🐸</div>
+          <div class="project-thumb"><div class="thumb-shape thumb-kite"></div></div>
           <h3>Frog</h3>
-          <p>A playful fold with lively shapes.</p>
+          <p>A playful project with a balanced folded body.</p>
         </div>
+
         <div class="card project-card" onclick="selectProject(this, 'Flower')">
-          <div class="project-thumb">🌸</div>
+          <div class="project-thumb"><div class="thumb-shape"></div></div>
           <h3>Flower</h3>
-          <p>A soft decorative model with petal folds.</p>
+          <p>A decorative fold with petal-inspired shaping.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Butterfly')">
+          <div class="project-thumb"><div class="thumb-shape thumb-diamond"></div></div>
+          <h3>Butterfly</h3>
+          <p>A soft symmetrical model with wing-like folds.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Tulip')">
+          <div class="project-thumb"><div class="thumb-shape thumb-tall"></div></div>
+          <h3>Tulip</h3>
+          <p>A flower model with a tall folded form.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Fox')">
+          <div class="project-thumb"><div class="thumb-shape thumb-triangle"></div></div>
+          <h3>Fox</h3>
+          <p>A simple animal fold with pointed corners.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Heart')">
+          <div class="project-thumb"><div class="thumb-shape art-rectangle"></div></div>
+          <h3>Heart</h3>
+          <p>A friendly shape with clean, centered folds.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Lily')">
+          <div class="project-thumb"><div class="thumb-shape thumb-kite"></div></div>
+          <h3>Lily</h3>
+          <p>A layered flower model with narrow folds.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Star')">
+          <div class="project-thumb"><div class="thumb-shape thumb-diamond"></div></div>
+          <h3>Star</h3>
+          <p>A geometric fold with repeated shaping steps.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Dog')">
+          <div class="project-thumb"><div class="thumb-shape thumb-triangle"></div></div>
+          <h3>Dog</h3>
+          <p>A beginner-friendly animal face fold.</p>
+        </div>
+
+        <div class="card project-card" onclick="selectProject(this, 'Cat')">
+          <div class="project-thumb"><div class="thumb-shape thumb-triangle"></div></div>
+          <h3>Cat</h3>
+          <p>A simple face fold with pointed ears.</p>
         </div>
       </div>
 
@@ -649,15 +789,15 @@
 
           <div class="thumb-row">
             <div class="mini-guide">
-              <div class="mini-guide-visual" id="mini1">◇</div>
+              <div class="mini-guide-visual" id="mini1">Start shape</div>
               <small>Start</small>
             </div>
             <div class="mini-guide">
-              <div class="mini-guide-visual" id="mini2">↗</div>
+              <div class="mini-guide-visual" id="mini2">Fold direction</div>
               <small>Move</small>
             </div>
             <div class="mini-guide">
-              <div class="mini-guide-visual" id="mini3">△</div>
+              <div class="mini-guide-visual" id="mini3">Result shape</div>
               <small>Result</small>
             </div>
           </div>
@@ -689,7 +829,7 @@
           <div class="camera-overlay" id="guideOverlay">
             <div class="overlay-shape">
               <div class="overlay-line" id="overlayLine"></div>
-              <div class="overlay-arrow" id="overlayArrow">↖</div>
+              <div class="overlay-arrow" id="overlayArrow">UP</div>
             </div>
           </div>
         </div>
@@ -705,8 +845,8 @@
   <section id="completeScreen" class="hidden">
     <div class="complete-wrap">
       <div class="complete-card">
-        <div class="complete-icon">🎉</div>
-        <h2>You finished your origami!</h2>
+        <div class="complete-shape"></div>
+        <h2>You finished your origami</h2>
         <p id="completeText">
           Great work completing your project. You followed the steps and made it to the end.
         </p>
@@ -729,162 +869,69 @@
       Crane: "Materials: 1 square sheet of paper and a flat surface.",
       Boat: "Materials: 1 square sheet of paper and a flat surface.",
       Frog: "Materials: 1 square sheet of paper and a flat surface.",
-      Flower: "Materials: 1 square sheet of paper and a flat surface."
+      Flower: "Materials: 1 square sheet of paper and a flat surface.",
+      Butterfly: "Materials: 1 square sheet of paper and a flat surface.",
+      Tulip: "Materials: 1 square sheet of paper and a flat surface.",
+      Fox: "Materials: 1 square sheet of paper and a flat surface.",
+      Heart: "Materials: 1 square sheet of paper and a flat surface.",
+      Lily: "Materials: 1 square sheet of paper and a flat surface.",
+      Star: "Materials: 1 square sheet of paper and a flat surface.",
+      Dog: "Materials: 1 square sheet of paper and a flat surface.",
+      Cat: "Materials: 1 square sheet of paper and a flat surface."
     };
 
+    const baseLesson = [
+      {
+        label: "Step Image Placeholder 1",
+        artClass: "art-diamond",
+        text: "Place your square paper like a diamond with one corner facing down.",
+        feedback: "AI Guide: Start with the paper centered. A diamond shape helps set up the next fold clearly.",
+        mini: ["Diamond shape", "Place flat", "Ready to fold"],
+        overlayArrow: "UP-LEFT",
+        overlayRotation: "-28deg"
+      },
+      {
+        label: "Step Image Placeholder 2",
+        artClass: "art-triangle",
+        text: "Fold the bottom corner up to the top corner to make a triangle.",
+        feedback: "AI Guide: Match the corners gently before pressing the crease.",
+        mini: ["Diamond shape", "Fold upward", "Triangle shape"],
+        overlayArrow: "UP",
+        overlayRotation: "-45deg"
+      },
+      {
+        label: "Step Image Placeholder 3",
+        artClass: "art-kite",
+        text: "Fold one side inward toward the center line.",
+        feedback: "AI Guide: Bring the edge toward the center line without crossing over it.",
+        mini: ["Triangle shape", "Fold inward", "Narrow shape"],
+        overlayArrow: "IN",
+        overlayRotation: "90deg"
+      },
+      {
+        label: "Step Image Placeholder 4",
+        artClass: "art-rectangle",
+        text: "Repeat on the other side and flatten the model neatly.",
+        feedback: "AI Guide: Nice work. Check whether both sides look even before moving on.",
+        mini: ["Narrow shape", "Repeat fold", "Finished step"],
+        overlayArrow: "PRESS",
+        overlayRotation: "0deg"
+      }
+    ];
+
     const lessons = {
-      Crane: [
-        {
-          label: "Step Image Placeholder 1",
-          icon: "◇",
-          text: "Place your square paper like a diamond with one corner facing down.",
-          feedback: "AI Guide: Start with the paper centered. A diamond shape helps set up the next fold clearly.",
-          mini: ["◇", "✋", "◇"],
-          overlayArrow: "↖",
-          overlayRotation: "-28deg"
-        },
-        {
-          label: "Step Image Placeholder 2",
-          icon: "△",
-          text: "Fold the bottom corner up to the top corner to make a triangle.",
-          feedback: "AI Guide: Match the corners gently before pressing the crease.",
-          mini: ["◇", "↗", "△"],
-          overlayArrow: "↖",
-          overlayRotation: "-45deg"
-        },
-        {
-          label: "Step Image Placeholder 3",
-          icon: "◭",
-          text: "Fold one side inward toward the center line to begin the kite shape.",
-          feedback: "AI Guide: Bring the edge toward the center line without crossing over it.",
-          mini: ["△", "➡", "◭"],
-          overlayArrow: "➡",
-          overlayRotation: "90deg"
-        },
-        {
-          label: "Step Image Placeholder 4",
-          icon: "🕊️",
-          text: "Repeat on the other side and flatten the model neatly.",
-          feedback: "AI Guide: Nice work. Check whether both sides look even before moving on.",
-          mini: ["◭", "↘", "🕊️"],
-          overlayArrow: "✨",
-          overlayRotation: "0deg"
-        }
-      ],
-      Boat: [
-        {
-          label: "Step Image Placeholder 1",
-          icon: "◇",
-          text: "Place your paper flat and rotate it so it looks like a diamond.",
-          feedback: "AI Guide: Begin with the paper smooth and centered for a cleaner fold.",
-          mini: ["◇", "✋", "◇"],
-          overlayArrow: "↖",
-          overlayRotation: "-28deg"
-        },
-        {
-          label: "Step Image Placeholder 2",
-          icon: "△",
-          text: "Fold the bottom corner to the top to make a triangle.",
-          feedback: "AI Guide: Try to line up the corners before pressing the fold.",
-          mini: ["◇", "↗", "△"],
-          overlayArrow: "↖",
-          overlayRotation: "-45deg"
-        },
-        {
-          label: "Step Image Placeholder 3",
-          icon: "⛵",
-          text: "Fold the lower corners upward to begin shaping the boat.",
-          feedback: "AI Guide: Keep both sides even so the shape stays balanced.",
-          mini: ["△", "⬆", "⛵"],
-          overlayArrow: "⬆",
-          overlayRotation: "0deg"
-        },
-        {
-          label: "Step Image Placeholder 4",
-          icon: "⛵",
-          text: "Open and flatten the shape into a simple boat.",
-          feedback: "AI Guide: Pull carefully and flatten softly to keep the paper neat.",
-          mini: ["△", "↔", "⛵"],
-          overlayArrow: "↔",
-          overlayRotation: "0deg"
-        }
-      ],
-      Frog: [
-        {
-          label: "Step Image Placeholder 1",
-          icon: "◇",
-          text: "Start with your paper as a diamond on the table.",
-          feedback: "AI Guide: A centered paper makes the next folds easier to follow.",
-          mini: ["◇", "✋", "◇"],
-          overlayArrow: "↖",
-          overlayRotation: "-28deg"
-        },
-        {
-          label: "Step Image Placeholder 2",
-          icon: "△",
-          text: "Fold corner to corner to create a triangle.",
-          feedback: "AI Guide: Match the points as closely as you can before pressing the crease.",
-          mini: ["◇", "↗", "△"],
-          overlayArrow: "↖",
-          overlayRotation: "-45deg"
-        },
-        {
-          label: "Step Image Placeholder 3",
-          icon: "🐸",
-          text: "Fold the side flaps inward to begin shaping the frog body.",
-          feedback: "AI Guide: Crisp folds can help the frog body stay balanced and symmetrical.",
-          mini: ["△", "↘", "🐸"],
-          overlayArrow: "↘",
-          overlayRotation: "20deg"
-        },
-        {
-          label: "Step Image Placeholder 4",
-          icon: "🐸",
-          text: "Press and shape the final folds to complete the frog.",
-          feedback: "AI Guide: Great progress. Make sure the base is flat before finishing.",
-          mini: ["🐸", "⬇", "🐸"],
-          overlayArrow: "⬇",
-          overlayRotation: "0deg"
-        }
-      ],
-      Flower: [
-        {
-          label: "Step Image Placeholder 1",
-          icon: "◇",
-          text: "Place the paper like a diamond and smooth it flat.",
-          feedback: "AI Guide: Start on a flat surface for softer petal folds later on.",
-          mini: ["◇", "✋", "◇"],
-          overlayArrow: "↖",
-          overlayRotation: "-28deg"
-        },
-        {
-          label: "Step Image Placeholder 2",
-          icon: "△",
-          text: "Fold corner to corner to create a triangle base.",
-          feedback: "AI Guide: Match the corners gently and crease neatly.",
-          mini: ["◇", "↗", "△"],
-          overlayArrow: "↖",
-          overlayRotation: "-45deg"
-        },
-        {
-          label: "Step Image Placeholder 3",
-          icon: "🌷",
-          text: "Fold the side upward to begin forming a petal shape.",
-          feedback: "AI Guide: Keep the fold soft but precise so the petal stays balanced.",
-          mini: ["△", "⬆", "🌷"],
-          overlayArrow: "⬆",
-          overlayRotation: "0deg"
-        },
-        {
-          label: "Step Image Placeholder 4",
-          icon: "🌸",
-          text: "Repeat and open the petals slightly to finish the flower.",
-          feedback: "AI Guide: Open the petals slowly so the paper keeps a clean shape.",
-          mini: ["🌷", "↔", "🌸"],
-          overlayArrow: "✨",
-          overlayRotation: "0deg"
-        }
-      ]
+      Crane: baseLesson,
+      Boat: baseLesson,
+      Frog: baseLesson,
+      Flower: baseLesson,
+      Butterfly: baseLesson,
+      Tulip: baseLesson,
+      Fox: baseLesson,
+      Heart: baseLesson,
+      Lily: baseLesson,
+      Star: baseLesson,
+      Dog: baseLesson,
+      Cat: baseLesson
     };
 
     function selectLevel(card, level) {
@@ -933,7 +980,7 @@
 
     function updateOverlay(step) {
       document.getElementById("overlayLine").style.transform = `rotate(${step.overlayRotation || "0deg"})`;
-      document.getElementById("overlayArrow").textContent = step.overlayArrow || "↖";
+      document.getElementById("overlayArrow").textContent = step.overlayArrow || "UP";
     }
 
     function updateStep() {
@@ -944,7 +991,7 @@
 
       document.getElementById("stepImage").innerHTML = `
         <div class="image-label">${step.label}</div>
-        <div class="placeholder-art">${step.icon}</div>
+        <div class="placeholder-art ${step.artClass}"></div>
         <div class="guide-line"></div>
         <div class="guide-arrow">${step.overlayArrow}</div>
       `;
