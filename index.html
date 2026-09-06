@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Origami Fold Along</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #fdf6fb;
+      color: #4b4b4b;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #f8dff0;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #f3cce6;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #7b5c74;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: #6d6d6d;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 16px;
+      background: #fff7fc;
+      border-bottom: 1px solid #f1d8e8;
+    }
+
+    button {
+      background: #cfe8ff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #b9dcfb;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      min-height: 500px;
+    }
+
+    .panel h2 {
+      margin-bottom: 12px;
+      color: #7b5c74;
+    }
+
+    .step-card {
+      background: #fef3e7;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .step-visual {
+      width: 100%;
+      height: 260px;
+      background: linear-gradient(135deg, #fde2e4, #e2f0cb);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b5b65;
+      font-size: 1.1rem;
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+
+    .feedback-box {
+      background: #e8f7e8;
+      border-left: 6px solid #9ad29a;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 12px;
+    }
+
+    .camera-wrapper {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      background: #eee;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #ddd;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fold-guide {
+      width: 70%;
+      height: 70%;
+      border: 3px dashed rgba(255, 105, 180, 0.8);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .fold-guide::before {
+      content: "Next Fold Guide";
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      color: #c05a93;
+      padding: 4px 10px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+
+    .fold-line {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      right: 10%;
+      border-top: 4px dotted rgba(255, 105, 180, 0.9);
+      transform: rotate(-20deg);
+    }
+
+    .arrow {
+      position: absolute;
+      bottom: 20%;
+      right: 18%;
+      font-size: 2rem;
+      color: rgba(255, 105, 180, 0.9);
+      animation: bounce 1.2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .step-nav {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 0.95rem;
+      color: #6a6a6a;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Origami Fold Along</h1>
+    <p>Learn visually, follow with your camera, and get gentle guidance step by step.</p>
+  </header>
+
+  <div class="controls">
+    <button onclick="toggleFeedback()">Toggle AI Feedback</button>
+    <button onclick="toggleGuide()">Toggle Guided Assist</button>
+    <button onclick="startCamera()">Start Camera</button>
+  </div>
+
+  <div class="container">
+    <section class="panel">
+      <h2>Step Demonstration</h2>
+      <div class="step-card">
+        <div class="step-visual" id="stepVisual">
+          Step 1: Start with a square paper. Rotate it like a diamond.
+        </div>
+        <p id="stepText">
+          Place your paper flat and turn one corner toward you so it looks like a diamond.
+        </p>
+        <div class="feedback-box" id="feedbackBox">
+          AI Feedback: Your paper should be centered and rotated like a diamond before the first fold.
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button onclick="prevStep()">Previous Step</button>
+        <button onclick="nextStep()">Next Step</button>
+      </div>
+
+      <div class="status" id="statusText">
+        Step 1 of 4
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Your Live Camera</h2>
+      <div class="camera-wrapper">
+        <video id="camera" autoplay playsinline></video>
+        <div class="overlay" id="guideOverlay">
+          <div class="fold-guide">
+            <div class="fold-line"></div>
+            <div class="arrow">↖</div>
+          </div>
+        </div>
+      </div>
+      <div class="status">
+        Point your paper at the camera and follow the guide overlay.
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        visual: "Step 1: Start with a square paper. Rotate it like a diamond.",
+        text: "Place your paper flat and turn one corner toward you so it looks like a diamond.",
+        feedback: "AI Feedback: Your paper should be centered and rotated like a diamond before the first fold."
+      },
+      {
+        visual: "Step 2: Fold the bottom corner up to meet the top corner.",
+        text: "Make a diagonal fold to create a triangle. Press the crease firmly.",
+        feedback: "AI Feedback: Try to line up the top and bottom corners more carefully before pressing the fold."
+      },
+      {
+        visual: "Step 3: Fold the right corner inward toward the center.",
+        text: "Bring the right point toward the middle line to begin shaping the model.",
+        feedback: "AI Feedback: The right flap should angle inward and meet the center crease."
+      },
+      {
+        visual: "Step 4: Repeat on the left side and flatten.",
+        text: "Fold the left point inward to match the other side, then flatten the model neatly.",
+        feedback: "AI Feedback: Nice work. Check that both sides are even and symmetrical."
+      }
+    ];
+
+    let currentStep = 0;
+    let feedbackOn = true;
+    let guideOn = true;
+
+    function updateStep() {
+      document.getElementById("stepVisual").textContent = steps[currentStep].visual;
+      document.getElementById("stepText").textContent = steps[currentStep].text;
+      document.getElementById("feedbackBox").textContent = steps[currentStep].feedback;
+      document.getElementById("statusText").textContent = `Step ${currentStep + 1} of ${steps.length}`;
+      document.getElementById("feedbackBox").style.display = feedbackOn ? "block" : "none";
+      document.getElementById("guideOverlay").style.display = guideOn ? "flex" : "none";
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        updateStep();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        updateStep();
+      }
+    }
+
+    function toggleFeedback() {
+      feedbackOn = !feedbackOn;
+      updateStep();
+    }
+
+    function toggleGuide() {
+      guideOn = !guideOn;
+      updateStep();
+    }
+
+    async function startCamera() {
+      const video = document.getElementById("camera");
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+      } catch (error) {
+        alert("Camera access was denied or not available.");
+        console.error(error);
+      }
+    }
+
+    updateStep();
+  </script>
+</body>
+</html>
